@@ -6,14 +6,14 @@
 
 void main()
 {
-    int N = 50000;
+    int Num = 50000;
     int thin = 1000;
     int i, j;
     gsl_rng *r = gsl_rng_alloc(gsl_rng_mt19937);
     double x = 0;
     double y = 0;
     printf("Iter x y\n");
-    for (i = 0; i < N; i++)
+    for (i = 0; i < Num; i++)
     {
         for (j = 0; j < thin; j++)
         {

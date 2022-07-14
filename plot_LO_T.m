@@ -15,7 +15,7 @@ time=data(1:endtime,1);
 Variance=data(1:endtime,2);
 loglog(time,Variance);
 time1=time(9:60);
-loglog(time1,0.4*time1.^(-1.05),'--')
+% loglog(time1,0.4*time1.^(-1.05),'--')
 % time2=time(140:588);
 % loglog(time2,0.005*time2.^(-1.8),'--')
 

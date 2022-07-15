@@ -9,13 +9,13 @@
 #define Pi 3.1415926535897932384626433832795
 // #define M 1
 #define g 1
-#define T pow(10, 3)
+#define T pow(10, 8)
 #define N 5000
 // #define theta 0
 
 int main(int argc, char *argv[])
 {
-    double theta = 0;
+    double theta = 0.5;
     double complex x0A[N], x0B[N];
     double complex phiA[N], phiB[N];
     double Meanvaluesave[1001], Meanvalue;

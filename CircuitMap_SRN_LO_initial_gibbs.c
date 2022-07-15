@@ -4,12 +4,14 @@
 #include <complex.h>
 #include <time.h>
 #include <omp.h>
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
 #define Pi 3.1415926535897932384626433832795
 #define M 5000
 #define g 1
 #define T pow(10, 3)
 #define N 5000
-#define theta 0
+#define theta 0.5
 double complex x0A[M][N], x0B[M][N];
 // double complex x0AM[N], x0BM[N];
 double complex phiA[N], phiB[N];
@@ -18,6 +20,9 @@ double Variance[1000];
 int taxis[1000];
 int main()
 {
+
+    double x, y, phi;
+
     // printf("%f", T);
     clock_t start_run, finish_run;
     double time_count;
@@ -29,8 +34,14 @@ int main()
         sumBvalue[m] = 0;
         for (n = 0; n < N; n++)
         {
-            x0A[m][n] = rand() + I * rand();
-            x0B[m][n] = rand() + I * rand();
+            y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
+            x = -log(1 - y);
+            phi = (double)rand() / (double)((unsigned)RAND_MAX + 1) * (2 * Pi);
+            x0A[m][n] = x * exp(I * phi);
+            y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
+            x = -log(1 - y);
+            phi = (double)rand() / (double)((unsigned)RAND_MAX + 1) * (2 * Pi);
+            x0B[m][n] = x * exp(I * phi);
             sumAvalue[m] = sumAvalue[m] + cabs(x0A[m][n]);
             sumBvalue[m] = sumBvalue[m] + cabs(x0B[m][n]);
         }

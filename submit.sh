@@ -29,15 +29,17 @@ done
 export OMP_NUM_THREADS=1   #### Instead of ' 12 ', input core number which you want to use, but there is a limitation  ####
                             #### in both matlab and mathematica : Matlab : 12, Mathematica : 8                          ####
 
-
-for i in $(seq 607 634)
+for x in $@
+do
+y=$((x+27))
+for i in $(seq $x $y)
 do
 
 
       /home/weihua/CircuitMap_SRN.out $i
 
 done
-
+done
 wait
 
 

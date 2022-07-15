@@ -11,7 +11,7 @@
 #define g 1
 #define T pow(10, 3)
 #define N 5000
-#define theta 0
+#define theta 0.5
 double complex x0A[M][N], x0B[M][N];
 // double complex x0AM[N], x0BM[N];
 double complex phiA[N], phiB[N];
@@ -21,22 +21,7 @@ int taxis[1000];
 int main()
 {
 
-    // int Num = 50000;
-    int thin = 1000;
-    int i, j;
-    gsl_rng *r = gsl_rng_alloc(gsl_rng_mt19937);
-    double x = 0;
-    double y = 0;
-    // printf("Iter x y\n");
-    for (i = 0; i < N; i++)
-    {
-        for (j = 0; j < thin; j++)
-        {
-            x = gsl_ran_gamma(r, 3.0, 1.0 / (y * y + 4));
-            y = 1.0 / (x + 1) + gsl_ran_gaussian(r, 1.0 / sqrt(2 * x + 2));
-        }
-        // printf("%d %f %f\n", i, x, y);
-    }
+    double x, y, phi;
 
     // printf("%f", T);
     clock_t start_run, finish_run;
@@ -49,8 +34,14 @@ int main()
         sumBvalue[m] = 0;
         for (n = 0; n < N; n++)
         {
-            x0A[m][n] = rand() + I * rand();
-            x0B[m][n] = rand() + I * rand();
+            y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
+            x = -log(1 - y);
+            phi = (double)rand() / (double)((unsigned)RAND_MAX + 1) * (2 * Pi);
+            x0A[m][n] = x * exp(I * phi);
+            y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
+            x = -log(1 - y);
+            phi = (double)rand() / (double)((unsigned)RAND_MAX + 1) * (2 * Pi);
+            x0B[m][n] = x * exp(I * phi);
             sumAvalue[m] = sumAvalue[m] + cabs(x0A[m][n]);
             sumBvalue[m] = sumBvalue[m] + cabs(x0B[m][n]);
         }

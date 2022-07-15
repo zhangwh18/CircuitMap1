@@ -1,9 +1,9 @@
 # For pure serial jobs, @YNT=1
 #!/bin/sh
 
-#$ -N weihua
+#$ -N Sf_Arin
 
-#$ -q short_28.q                            
+#$ -q long_28.q                            
 #### single : For NOT high memory jobs (below 14GB memory per node). It uses just a single node.        ####
 ####          But your computation node may share with other user's jobs.                               ####    
 ####        
@@ -30,11 +30,10 @@ export OMP_NUM_THREADS=1   #### Instead of ' 12 ', input core number which you w
                             #### in both matlab and mathematica : Matlab : 12, Mathematica : 8                          ####
 
 
-for i in $(seq 607 634)
+for i in $(seq 1 28)
 do
 
-
-      /home/weihua/CircuitMap_SRN.out $i
+    time  gcc /home/weihua/CircuitMap_SRN_LO_initial_M1.c -lm --ro $i >  /home/arindam/Sf_Arin/f_data_$i.out  &
 
 done
 

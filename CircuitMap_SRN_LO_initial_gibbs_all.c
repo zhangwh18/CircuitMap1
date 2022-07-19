@@ -15,7 +15,7 @@
 double complex x0A[M][N], x0B[M][N];
 // double complex x0AM[N], x0BM[N];
 double complex phiA[N], phiB[N];
-double Meanvalue[M];
+double Meanvalue[M][N];
 double Variance[1000];
 int taxis[1000];
 int main()
@@ -62,11 +62,13 @@ int main()
     //     sumAvalue[2] = sumAvalue[2] + cabs(x0A[2][n]);
     // }
     // printf("%f", sumAvalue[2]);
-
-    for (n = 0; n < M; n++)
+    for (n = 0; n < N; n++)
     {
-        // x0A[n][n] = 1 + I * 0;
-        Meanvalue[n] = cabs(x0A[n][0]);
+
+        for (m = 0; m < M; m++)
+        {
+            Meanvalue[m][n] = cabs(x0A[m][n]);
+        }
     }
     for (t = 0; t < T; t++)
     {
@@ -112,9 +114,13 @@ int main()
                 x0B[Mind][n] = exp(I * g * cabs(phiB[n]) * cabs(phiB[n])) * phiB[n];
             }
         }
-        for (n = 0; n < M; n++)
+        for (n = 0; n < N; n++)
         {
-            Meanvalue[n] = (cabs(Meanvalue[n]) * t + cabs(x0A[n][0])) / (t + 1);
+
+            for (m = 0; m < M; m++)
+            {
+                Meanvalue[m][n] = (cabs(Meanvalue[m][n]) * t + cabs(x0A[m][n])) / (t + 1);
+            }
         }
         // printf("%f\n", cabs(x0A[1][0]));
         if (t == ceil(1.021 * (tsave + 1)))
@@ -123,20 +129,26 @@ int main()
             tsave = 1.021 * (tsave + 1);
             taxis[taxisind] = t;
             sumMeanvalue = 0;
-            for (n = 0; n < M; n++)
+            for (n = 0; n < N; n++)
             {
-                sumMeanvalue = sumMeanvalue + cabs(Meanvalue[n]);
+                for (m = 0; m < M; m++)
+                {
+                    sumMeanvalue = sumMeanvalue + cabs(Meanvalue[m][n]);
+                }
             }
             // printf("%f\n", cabs(Meanvalue[1]));
-            averMeanvalue = sumMeanvalue / M;
+            averMeanvalue = sumMeanvalue / (M * N);
             // printf("%f\n", cabs(averMeanvalue));
 
             sumMeanvalue = 0;
-            for (n = 0; n < M; n++)
+            for (n = 0; n < N; n++)
             {
-                // printf("%f\n", (cabs(Meanvalue[n]) - averMeanvalue) * (cabs(Meanvalue[n]) - averMeanvalue));
+                for (m = 0; m < M; m++)
+                {
+                    // printf("%f\n", (cabs(Meanvalue[n]) - averMeanvalue) * (cabs(Meanvalue[n]) - averMeanvalue));
 
-                sumMeanvalue = sumMeanvalue + (cabs(Meanvalue[n]) - averMeanvalue) * (cabs(Meanvalue[n]) - averMeanvalue);
+                    sumMeanvalue = sumMeanvalue + (cabs(Meanvalue[m][n]) - averMeanvalue) * (cabs(Meanvalue[m][n]) - averMeanvalue);
+                }
             }
             // printf("%f\n", cabs(sumMeanvalue));
             Variance[taxisind] = sumMeanvalue;

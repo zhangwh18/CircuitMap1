@@ -10,7 +10,7 @@
 #include <gsl/gsl_randist.h>
 #define Pi 3.1415926535897932384626433832795
 #define M 1
-#define g 1
+#define g 10
 #define T pow(10, 7)
 #define N 5000
 // #define theta 0.5
@@ -42,7 +42,7 @@ int main()
         y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
         x = -log(1 - y);
         phi = (double)rand() / (double)((unsigned)RAND_MAX) * (2 * Pi);
-        x0B[n] = x0A[n];
+        x0B[n] = x * exp(I * phi);
         sumAvalue = sumAvalue + cabs(x0A[n]) * cabs(x0A[n]) + cabs(x0B[n]) * cabs(x0B[n]);
         // sumBvalue = sumBvalue + cabs(x0B[n]) * cabs(x0B[n]);
     }
@@ -190,7 +190,7 @@ int main()
     }
 
     FILE *fp1;
-    fp1 = fopen("HFt05_try_ini4", "w");
+    fp1 = fopen("HFt05_try_g_10", "w");
     // perror("fopen");
 
     // FILE *fp2;

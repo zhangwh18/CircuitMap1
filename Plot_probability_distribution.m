@@ -1,6 +1,6 @@
 clc
 clear
-data=load('/home/pcs/Documents/CircuitMap/TmeanA_0.500_2242716');
+data=load('/home/pcs/Documents/CircuitMap/TmeanAB_0.500_5713944');
 f_s5=data(:,1);
 len=floor(1.1*sqrt(length(f_s5)));%calculate the number of sections
 x=linspace(min(f_s5),max(f_s5),len);  %  divide the difference value into len sections

@@ -10,8 +10,8 @@
 #include <gsl/gsl_randist.h>
 #define Pi 3.1415926535897932384626433832795
 #define M 1
-#define g 10
-#define T pow(10, 7)
+#define g 1
+#define T pow(10, 8)
 #define N 5000
 // #define theta 0.5
 double complex x0A[N], x0B[N];
@@ -38,17 +38,21 @@ int main()
         y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
         x = -log(1 - y);
         phi = (double)rand() / (double)((unsigned)RAND_MAX) * (2 * Pi);
-        x0A[n] = x * exp(I * phi);
+        x0A[n] = x * (cos(phi) + I * sin(phi));
         y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
         x = -log(1 - y);
         phi = (double)rand() / (double)((unsigned)RAND_MAX) * (2 * Pi);
-        x0B[n] = x * exp(I * phi);
+        x0B[n] = x * (cos(phi) + I * sin(phi));
+        // printf("%f\n", cimag(x0A[n]));
         sumAvalue = sumAvalue + cabs(x0A[n]) * cabs(x0A[n]) + cabs(x0B[n]) * cabs(x0B[n]);
+        // printf("%f\n", cimag(I * sin(phi)));
         // sumBvalue = sumBvalue + cabs(x0B[n]) * cabs(x0B[n]);
     }
     y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
     x = -log(1 - y);
-    printf("%f\n", x);
+    // printf("%f\n", x);
+    // printf("%f\n", cimag(x0A[1]));
+
     // x0A[N - 1] = x0A[0];
     // x0B[N - 1] = x0B[0];
     // // printf("%d\n", N - 1);
@@ -58,6 +62,7 @@ int main()
     {
         x0A[n] = x0A[n] * sqrt(N * 2) / pow(sumAvalue, 0.5);
         x0B[n] = x0B[n] * sqrt(N * 2) / pow(sumAvalue, 0.5);
+        // printf("%f\n", cimag(x0A[n]));
     }
     // printf("%f\n", cabs(x0A[m][1]));
 
@@ -67,15 +72,14 @@ int main()
     {
         sumAvalue = sumAvalue + cabs(x0A[n]) * cabs(x0A[n]) + cabs(x0B[n]) * cabs(x0B[n]); // sumBvalue = sumBvalue + cabs(x0B[n]) * cabs(x0B[n]);
     }
-    printf("%f\n", sumAvalue);
+    // printf("%f\n", sumAvalue);
     for (n = 0; n < N; n++)
     {
         Sumvalue[n] = cabs(x0A[n]);
         SumvalueB[n] = cabs(x0B[n]);
     }
-    printf("%f\n", Sumvalue[900]);
-    printf("%f\n", SumvalueB[900]);
-
+    // printf("%f\n", Sumvalue[900]);
+    // printf("%f\n", SumvalueB[900]);
     for (t = 1; t < T; t++)
     {
         start_run = clock();
@@ -115,9 +119,12 @@ int main()
         }
         for (n = 0; n < N; n++)
         {
-            x0A[n] = exp(I * g * cabs(phiA[n]) * cabs(phiA[n])) * phiA[n];
-            x0B[n] = exp(I * g * cabs(phiB[n]) * cabs(phiB[n])) * phiB[n];
+            // printf("%f\n", cimag(x0B[n]));
+            x0A[n] = (cos(g * cabs(phiA[n]) * cabs(phiA[n])) + I * sin(g * cabs(phiA[n]) * cabs(phiA[n]))) * phiA[n];
+            x0B[n] = (cos(g * cabs(phiB[n]) * cabs(phiB[n])) + I * sin(g * cabs(phiB[n]) * cabs(phiB[n]))) * phiB[n];
+            // printf("%f\n", creal(x0A[n]));
         }
+        // printf("%f\n", cimag(x0A[1]));
         // sumAvalue = 0;
         // // sumBvalue = 0;
         // for (n = 0; n < N; n++)
@@ -149,7 +156,7 @@ int main()
             char str[20];
             char dstr[20];
             char Mstr[20];
-            strcpy(str, "TmeanA_");
+            strcpy(str, "TmeanAB_");
             sprintf(dstr, "%.3lf", theta);
             strcat(str, dstr);
             strcat(str, "_");

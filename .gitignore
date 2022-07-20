@@ -1,52 +1,50 @@
-# Prerequisites
-*.d
+*
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Program
+!*.py
+!*.m
+!*.c
+!*.cpp
+!*.sh
+# Ignore file
+!.gitignore
 
-# Linker output
-*.ilk
-*.map
-*.exp
 
-# Precompiled Headers
-*.gch
-*.pch
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# # Prerequisites
+# *.d
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# # Compiled Object files
+# *.slo
+# *.lo
+# *.o
+# *.obj
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# # Precompiled Headers
+# *.gch
+# *.pch
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# # Compiled Dynamic libraries
+# *.so
+# *.dylib
+# *.dll
+
+# # Fortran module files
+# *.mod
+# *.smod
+
+# # Compiled Static libraries
+# *.lai
+# *.la
+# *.a
+# *.lib
+
+# # Executables
+# *.exe
+# *.out
+# *.app
+# # Data
+
+# *.mat
+# *.txt

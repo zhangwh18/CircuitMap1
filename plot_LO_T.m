@@ -1,7 +1,7 @@
 clc
 clear
-data=load('/home/pcs/Documents/CircuitMap/HFt05_try_ini');
-endtime=588;
+data=load('/home/pcs/Documents/CircuitMap/HFt05_try_ini4');
+endtime=700;
 time=data(1:endtime,1);
 Variance=data(1:endtime,2);
 loglog(time,Variance);

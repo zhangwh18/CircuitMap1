@@ -1,32 +1,46 @@
-# Prerequisites
-*.d
+*
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Program
+!*.py
+!*.m
+!*.c
+!*.cpp
+!*.sh
+# Ignore file
+!.gitignore
+# # Prerequisites
+# *.d
 
-# Precompiled Headers
-*.gch
-*.pch
+# # Compiled Object files
+# *.slo
+# *.lo
+# *.o
+# *.obj
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# # Precompiled Headers
+# *.gch
+# *.pch
 
-# Fortran module files
-*.mod
-*.smod
+# # Compiled Dynamic libraries
+# *.so
+# *.dylib
+# *.dll
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# # Fortran module files
+# *.mod
+# *.smod
 
-# Executables
-*.exe
-*.out
-*.app
+# # Compiled Static libraries
+# *.lai
+# *.la
+# *.a
+# *.lib
+
+# # Executables
+# *.exe
+# *.out
+# *.app
+# # Data
+
+# *.mat
+# *.txt

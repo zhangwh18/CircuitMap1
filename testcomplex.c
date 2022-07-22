@@ -13,13 +13,21 @@
 #define g 10
 #define T pow(10, 7)
 #define N 5000
-
+caA2 = cabs(phiA[n]) * cabs(phiA[n]);
+x0A[n] = (caA2 + I * sin(caA2)) * phiA[n];
+caA2 = cabs(phiB[n]) * cabs(phiB[n]);
+x0B[n] = (cos(caA2) + I * sin(caA2)) * phiB[n];
 int main()
 {
-    double complex a, b, c;
-    double phi = Pi / 4;
-    a = 2.1 * (cos(phi) + I * sin(phi));
-    b = 2 + I;
-    c = a * b;
-    printf("%f\n", cimag(c));
+    clock_t start_run, finish_run;
+    float time_count, a;
+    start_run = clock();
+    for (int i = 5; i--;)
+    {
+        // a = 1;
+        printf("%d\n", i);
+    }
+    finish_run = clock();
+    time_count = (double)(finish_run - start_run) / CLOCKS_PER_SEC;
+    printf("%f\n", time_count);
 }

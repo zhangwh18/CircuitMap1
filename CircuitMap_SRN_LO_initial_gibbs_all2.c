@@ -17,22 +17,22 @@
 double complex x0A[N], x0B[N];
 // double complex x0AM[N], x0BM[N];
 double complex phiA[N], phiB[N];
-double Meanvalue[N], MeanvalueB[N], Sumvalue[N], SumvalueB[N];
+double Meanvalue[N], Sumvalue[N];
 double Variance[1000];
 int taxis[1000];
 int main()
 {
-    double theta = 0.5;
+    double theta = 0.05;
     double x, y, phi;
 
     // printf("%f", T);
     clock_t start_run, finish_run;
     double time_count;
     int n, m, t, Mind, taxisind = 0;
-    double tsave = 1, sumMeanvalue, averMeanvalue, sumAvalue, sumBvalue;
+    double tsave = 1, sumMeanvalue, averMeanvalue, sumAvalue;
 
     sumAvalue = 0;
-    sumBvalue = 0;
+
     for (n = 0; n < N; n++)
     {
         y = (double)rand() / (double)((unsigned)RAND_MAX + 1);
@@ -66,23 +66,24 @@ int main()
     }
     // printf("%f\n", cabs(x0A[m][1]));
 
-    sumAvalue = 0;
-    sumBvalue = 0;
-    for (n = 0; n < N; n++)
-    {
-        sumAvalue = sumAvalue + cabs(x0A[n]) * cabs(x0A[n]) + cabs(x0B[n]) * cabs(x0B[n]); // sumBvalue = sumBvalue + cabs(x0B[n]) * cabs(x0B[n]);
-    }
+    // sumAvalue = 0;
+    // sumBvalue = 0;
+    // for (n = 0; n < N; n++)
+    // {
+    //     sumAvalue = sumAvalue + cabs(x0A[n]) * cabs(x0A[n]) + cabs(x0B[n]) * cabs(x0B[n]); // sumBvalue = sumBvalue + cabs(x0B[n]) * cabs(x0B[n]);
+    // }
     // printf("%f\n", sumAvalue);
     for (n = 0; n < N; n++)
     {
         Sumvalue[n] = cabs(x0A[n]);
-        SumvalueB[n] = cabs(x0B[n]);
+        // SumvalueB[n] = cabs(x0B[n]);
     }
     // printf("%f\n", Sumvalue[900]);
     // printf("%f\n", SumvalueB[900]);
+    start_run = clock();
+
     for (t = 1; t < T; t++)
     {
-        start_run = clock();
         //#omp parallel for
 
         // for (n = 0; n < N; n++)
@@ -135,7 +136,7 @@ int main()
         for (n = 0; n < N; n++)
         {
             Sumvalue[n] = Sumvalue[n] + cabs(x0A[n]);
-            SumvalueB[n] = SumvalueB[n] + cabs(x0B[n]);
+            // SumvalueB[n] = SumvalueB[n] + cabs(x0B[n]);
         }
         // printf("%f\n", cabs(x0A[1]));
         if (t == tsave)
@@ -148,29 +149,29 @@ int main()
             for (n = 0; n < N; n++)
             {
                 Meanvalue[n] = Sumvalue[n] / (t + 1);
-                MeanvalueB[n] = SumvalueB[n] / (t + 1);
+                // MeanvalueB[n] = SumvalueB[n] / (t + 1);
 
                 sumMeanvalue = sumMeanvalue + Meanvalue[n];
             }
-            FILE *fp2;
-            char str[20];
-            char dstr[20];
-            char Mstr[20];
-            strcpy(str, "TmeanAB_");
-            sprintf(dstr, "%.3lf", theta);
-            strcat(str, dstr);
-            strcat(str, "_");
-            sprintf(Mstr, "%d", t);
-            strcat(str, Mstr);
-            fp2 = fopen(str, "w");
-            for (n = 0; n < N; n++)
-            {
-                fprintf(fp2, "%.16f\t", Meanvalue[n]);
-                fprintf(fp2, "%.16f\n", MeanvalueB[n]);
+            // FILE *fp2;
+            // char str[20];
+            // char dstr[20];
+            // char Mstr[20];
+            // strcpy(str, "TmeanAB_");
+            // sprintf(dstr, "%.3lf", theta);
+            // strcat(str, dstr);
+            // strcat(str, "_");
+            // sprintf(Mstr, "%d", t);
+            // strcat(str, Mstr);
+            // fp2 = fopen(str, "w");
+            // for (n = 0; n < N; n++)
+            // {
+            //     fprintf(fp2, "%.16f\t", Meanvalue[n]);
+            //     fprintf(fp2, "%.16f\n", MeanvalueB[n]);
 
-                // fprintf(fp1, "%.16f\n", Variance[n]);
-            }
-            fclose(fp2);
+            //     // fprintf(fp1, "%.16f\n", Variance[n]);
+            // }
+            // fclose(fp2);
 
             // printf("%f\n", cabs(Meanvalue[1]));
             averMeanvalue = sumMeanvalue / N;
@@ -188,16 +189,15 @@ int main()
             Variance[taxisind] = sumMeanvalue / N;
             taxisind = taxisind + 1;
         }
-        finish_run = clock();
-        time_count = (double)(finish_run - start_run) / CLOCKS_PER_SEC;
-
-        // printf("%f\n", time_count);
 
         // printf("\n");
     }
+    finish_run = clock();
+    time_count = (double)(finish_run - start_run) / CLOCKS_PER_SEC;
 
+    // printf("%f\n", time_count);
     FILE *fp1;
-    fp1 = fopen("HFt05_try_g_10", "w");
+    fp1 = fopen("Variance_g_1_N_5000_M_1_T_8_s_005", "w");
     // perror("fopen");
 
     // FILE *fp2;
